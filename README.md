@@ -71,10 +71,10 @@ Before running this project, make sure you have the following prerequisites inst
 2. Navigate to the project directory:
 
     ```sh
-    cd school_library
+    cd oop-school-library
 3. Run the program:
     ```sh
-    ruby school_library.rb
+    ruby oop-school-library.rb
 
 <!-- AUTHORS -->
 
