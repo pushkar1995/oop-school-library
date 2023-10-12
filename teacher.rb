@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'person'
 
 # This is a Teacher class that represents a teacher in a school.
