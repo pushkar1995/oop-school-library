@@ -2,7 +2,6 @@
 
 - [📖 About the Project](#about-project)
   - [🛠 Built With](#built-with)
-  - [🚀 Live Demo](#live-demo)
 - [💻 Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -41,13 +40,6 @@ This project is built using the following technologies:
     <li>Authentication and authorization to restrict access to authorized users.</li>
   </ul>
 </details>
-
-
-<!-- LIVE DEMO -->
-
-## 🚀 Live Demo <a name="live-demo"></a>
-
-- [Live Demo Link](Coming soon!)
 
 <!-- GETTING STARTED -->
 
