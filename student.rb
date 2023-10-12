@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'person'
 
 # This is a Student class that represents a student in a school.
