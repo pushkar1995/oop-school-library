@@ -1,8 +1,6 @@
 require_relative 'person'
 
 # This is a Student class that represents a student in a school.
-# class Student < Person
-# end
 class Student < Person
   attr_accessor :classroom
 

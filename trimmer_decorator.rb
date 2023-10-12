@@ -1,4 +1,3 @@
-# class TrimmerDecorator < Decorator
 class TrimmerDecorator < Decorator
   def correct_name
     name = super
