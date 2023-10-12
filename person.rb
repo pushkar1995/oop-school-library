@@ -1,10 +1,13 @@
-# class Person
+require_relative 'nameable'
+# class Person < Nameable
 class Person
-  def initialize(id, age = 0, name = 'Unknown', parent_permission: true)
+  def initialize(id, age = 0, name = 'Unknown', parent_permission: true, nameable: nil)
+    super
     @id = id
     @name = name
     @age = age
     @parent_permission = parent_permission
+    @nameable = nameable
   end
 
   private
