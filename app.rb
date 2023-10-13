@@ -1,116 +1,133 @@
-require_relative 'book'
-require_relative 'person'
 require_relative 'student'
 require_relative 'teacher'
+require_relative 'book'
+require_relative 'rental'
+
+ACTIONS = {
+  1 => :list_books,
+  2 => :list_people,
+  3 => :create_person,
+  4 => :create_book,
+  5 => :create_rental,
+  6 => :list_rentals,
+  7 => :break
+}.freeze
 
 class App
+  def print_question
+    puts 'Welcome to School library App!'
+    puts "Please choose an option by entering a number:
+      1- List all books.
+      2- List all people.
+      3- Create a person.
+      4- Create a book.
+      5- Create a rental.
+      6- List all rentals for a given person id.
+      7- Exit."
+  end
+
   def initialize
-    @people = []
     @books = []
+    @person = []
     @rentals = []
   end
 
-  def list_books
-    @books.each do |book|
-      puts "Title: \"#{book.title}\", Author: #{book.author}"
-    end
-  end
+  def select_option
+    loop do
+      print_question
+      option = gets.chomp.to_i
+      action = ACTIONS[option]
 
-  def list_people
-    @people.each do |person|
-      puts "[#{person.class.name}] Name:#{person.name} ID:#{person.id} Age:#{person.age}"
+      if action == :break
+        break
+      elsif action
+        send(action)
+      else
+        puts 'Invalid number, please try again!'
+      end
     end
   end
 
   def create_person
-    puts "\nWould you like to create a student(1) or a teacher(2)?"
-    option = gets.chomp.to_i
+    print 'Do you want to create a student (1) or a teacher (2)? [input the number]: '
+    num = gets.chomp.to_i
 
-    if option == 1
-      print 'Age:'
-      age = gets.chomp.to_i
-      print 'Name:'
-      name = gets.chomp
+    print 'age:'
+    age = gets.chomp.to_i
 
-      if age < 18
-        print 'Has parent permission? [Y/N]:'
-        permission = gets.chomp
-      end
-      student = Student.new(age, name, parent_permission: permission)
-      @people.push(student)
+    print 'Name:'
+    name = gets.chomp
 
-      print 'Student created successfully!'
-    elsif option == 2
-      print 'Age:'
-      age = gets.chomp.to_i
-      print 'Name:'
-      name = gets.chomp
+    case num
+    when 1
+      print 'Has parent permission? [y/n]:'
+      parent_permission = gets.chomp
+      parent_permission = parent_permission == 'y'
+      @person.push(Student.new(age, name, parent_permission: parent_permission))
+    when 2
       print 'Specialization:'
       specialization = gets.chomp
-      teacher = Teacher.new(specialization, age, name, parent_permission: permission)
-      @people.push(teacher)
-
-      print 'Teacher created successfully!'
+      @person.push(Teacher.new(age, specialization, name))
     else
-      print 'Invalid option.'
+      puts 'Invalid number, please enter number again!'
+    end
+    puts 'Person created successfully 👤'
+  end
+
+  def list_people
+    @person.each do |per|
+      puts "[#{per.class}] Name: #{per.name}, ID: #{per.id}, Age: #{per.age}"
+    end
+  end
+
+  def list_books
+    @books.each do |book|
+      puts "Title: #{book.title}, Author: #{book.author}"
     end
   end
 
   def create_book
-    print 'Author:'
-    author = gets.chomp
     print 'Title:'
     title = gets.chomp
-    print 'Book created successfully!'
-    book = Book.new(title, author)
-    @books.push(book)
+
+    print 'author:'
+    author = gets.chomp
+
+    @books.push(Book.new(title, author))
+
+    puts 'Book created successfully 📚'
   end
 
   def create_rental
-    if @people.length.positive?
-      puts 'Please select a person from the list below by a number (and not the id):'
-      @people.each_with_index do |person, index|
-        puts "#{index + 1}. [#{person.class.name}] Name: #{person.name} ID: #{person.id} Age: #{person.age}"
-      end
-      person_choice = gets.chomp.to_i
-
-    else
-      puts 'No people added to the list'
+    puts 'Select a book from the following list by number '
+    @books.each_with_index do |book, index|
+      puts "#{index}) Title: #{book.title}, Author: #{book.author}"
     end
+    book_num = gets.chomp
+    book_num = book_num.to_i
 
-    if @books.length.positive?
-      puts 'Please select the book from the list below by a number:'
-      @books.each_with_index do |book, index|
-        puts "#{index + 1}. Title: \"#{book.title}\", Author: #{book.author}"
-      end
-      book_choice = gets.chomp.to_i
-    else
-      puts 'No books added to the list'
-      return
+    puts 'Select a person from the following list by number (not id)'
+    @person.each_with_index do |per, index|
+      puts "No: #{index}, [#{per.class}] Name: #{per.name}, ID: #{per.id}, Age: #{per.age}"
     end
+    person_num = gets.chomp
+    person_num = person_num.to_i
 
-    print 'Date (YYYY/MM/DD): '
+    print 'Date:'
     date = gets.chomp
-    selected_person = @people[person_choice - 1]
-    selected_book = @books[book_choice - 1]
 
-    rental = selected_person.add_rental(date, selected_book)
-    @rentals.push(rental)
-    puts 'Rental created successfully!'
+    @rentals.push(Rental.new(date, @person[person_num], @books[book_num]))
+    puts 'Rental Created successfully 📝 '
   end
 
   def list_rentals
-    puts 'ID of a person:'
-    id = gets.chomp.to_i
-    person_rentals = @rentals.select { |rental| rental.person.id == id }
+    print 'Id of person:'
+    id_person = gets.chomp
+    id_person = id_person.to_i
 
-    if person_rentals.empty?
-      puts "No rentals found for person with ID #{id}"
-    else
-      puts 'Rentals:'
-      person_rentals.each do |rental|
-        puts "Date: #{rental.date}, Book: #{rental.book.title}, by #{rental.book.author}"
-      end
+    puts 'Rentals'
+    @rentals.each do |rental|
+      puts "Date: #{rental.date} Book: #{rental.book.title} by #{rental.book.author} " if rental.person.id == id_person
     end
   end
 end
