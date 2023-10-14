@@ -1,52 +1,47 @@
 require_relative 'app'
 
-class Main < App
-  def main
-    puts "\nWelcome to School Library App!\n"
-    present_user_options
-  end
+def show_menu
+  puts ''
+  puts 'Please choose an option by entering a number:'
+  puts '1 - List all books'
+  puts '2 - List all people'
+  puts '3 - Create a person'
+  puts '4 - Create a book'
+  puts '5 - Create a rental'
+  puts '6 - List all rentals for a given person id'
+  puts '7 - Exit'
+end
 
-  def present_user_options
-    puts "\nPlease choose an option by entering a number:\n" \
-         "1. List all books\n" \
-         "2. List all people\n" \
-         "3. Create a person\n" \
-         "4. Create a book\n" \
-         "5. Create a rental\n" \
-         "6. List all rentals to a given person id\n" \
-         "7. Exit\n\n"
-    @choice = gets.chomp.to_i
-    options
-  end
-
-  def options
-    case @choice
-    when 1
-      list_books
-      present_user_options
-    when 2
-      list_people
-      present_user_options
-    when 3
-      create_person
-      present_user_options
-    when 4
-      create_book
-      present_user_options
-    when 5
-      create_rental
-      present_user_options
-    when 6
-      list_rentals
-      present_user_options
-    when 7
-      puts 'Exiting the app! Goodbye'
-      exit
-    else
-      puts 'Error: invalid number'
-      present_user_options
-    end
+def select_option(selected, app)
+  case selected
+  when 1
+    app.list_all_books
+  when 2
+    app.list_all_people
+  when 3
+    app.create_person
+  when 4
+    app.create_book
+  when 5
+    app.create_rental
+  when 6
+    app.list_rentals_for_person
+  else
+    puts 'Invalid input'
   end
 end
 
-Main.new.main
+def main
+  app = App.new
+  puts 'Welcome to School Library App!'
+  loop do
+    show_menu
+    selected = gets.chomp.to_i
+    break if selected == 7
+
+    select_option(selected, app)
+  end
+  puts 'Thank you for using this app!'
+end
+
+main
