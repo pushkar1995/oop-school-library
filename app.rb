@@ -122,7 +122,7 @@ class App
   def list_rentals
     puts 'ID of a person:'
     id = gets.chomp.to_i
-    person_rentals = @rental.select { |rental| rental.person.id == id }
+    @rental.select { |rental| rental.person.id == id }
 
     list_rentals_condition
   end
