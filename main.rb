@@ -1,12 +1,36 @@
 require_relative 'app'
 
-class Main < App
-  def main
-    puts "\nWelcome to School Library App!\n"
-    present_user_options
+class Main
+  def initialize
+    @app = App.new
   end
 
-  def present_user_options
+  # rubocop:disable Metrics/CyclomaticComplexity
+  def run
+    puts "\nWelcome to School Library App!\n"
+
+    loop do
+      print_user_options
+      choice = gets.chomp.to_i
+
+      case choice
+      when 1 then @app.list_books
+      when 2 then @app.list_people
+      when 3 then @app.create_person
+      when 4 then @app.create_book
+      when 5 then @app.create_rental
+      when 6 then @app.list_rentals
+      when 7
+        puts 'Exiting the app! Goodbye.'
+        break
+      else
+        puts 'Error: Invalid number.'
+      end
+    end
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+
+  def print_user_options
     puts "\nPlease choose an option by entering a number:\n" \
          "1. List all books\n" \
          "2. List all people\n" \
@@ -15,38 +39,7 @@ class Main < App
          "5. Create a rental\n" \
          "6. List all rentals to a given person id\n" \
          "7. Exit\n\n"
-    @choice = gets.chomp.to_i
-    options
-  end
-
-  def options
-    case @choice
-    when 1
-      list_books
-      present_user_options
-    when 2
-      list_people
-      present_user_options
-    when 3
-      create_person
-      present_user_options
-    when 4
-      create_book
-      present_user_options
-    when 5
-      create_rental
-      present_user_options
-    when 6
-      list_rentals
-      present_user_options
-    when 7
-      puts 'Exiting the app! Goodbye'
-      exit
-    else
-      puts 'Error: invalid number'
-      present_user_options
-    end
   end
 end
 
-Main.new.main
+Main.new.run
