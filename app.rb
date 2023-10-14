@@ -108,17 +108,6 @@ class App
     puts 'Rental created successfully!'
   end
 
-  # def list_rentals_condition
-  #   if person_rentals.empty?
-  #     puts "No rentals found for person with ID #{id}"
-  #   else
-  #     puts 'Rentals:'
-  #     person_rentals.each do |rental|
-  #       puts "Date: #{rental.date}, Book: #{rental.book.title}, by #{rental.book.author}"
-  #     end
-  #   end
-  # end
-
   def list_rentals
     puts 'ID of a person:'
     id = gets.chomp.to_i
