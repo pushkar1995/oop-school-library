@@ -7,7 +7,7 @@ class App
   def initialize
     @people = []
     @books = []
-    @rental = []
+    @rentals = []
   end
 
   def list_books
@@ -104,11 +104,26 @@ class App
     selected_book = @books[@book_choice - 1]
 
     rental = selected_person.add_rental(date, selected_book)
-    @rental.push(rental)
+    @rentals.push(rental)
     puts 'Rental created successfully!'
   end
 
-  def list_rentals_condition
+  # def list_rentals_condition
+  #   if person_rentals.empty?
+  #     puts "No rentals found for person with ID #{id}"
+  #   else
+  #     puts 'Rentals:'
+  #     person_rentals.each do |rental|
+  #       puts "Date: #{rental.date}, Book: #{rental.book.title}, by #{rental.book.author}"
+  #     end
+  #   end
+  # end
+
+  def list_rentals
+    puts 'ID of a person:'
+    id = gets.chomp.to_i
+    person_rentals = @rentals.select { |rental| rental.person.id == id }
+
     if person_rentals.empty?
       puts "No rentals found for person with ID #{id}"
     else
@@ -117,13 +132,5 @@ class App
         puts "Date: #{rental.date}, Book: #{rental.book.title}, by #{rental.book.author}"
       end
     end
-  end
-
-  def list_rentals
-    puts 'ID of a person:'
-    id = gets.chomp.to_i
-    @rental.select { |rental| rental.person.id == id }
-
-    list_rentals_condition
   end
 end
