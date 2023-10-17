@@ -7,7 +7,7 @@ class Book
     @rental = []
   end
 
-  def add_rental(rental)
-    @rental << rental
-  end
+  # def add_rental(rental)
+  #   @rental << rental
+  # end
 end
