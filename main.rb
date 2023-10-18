@@ -1,8 +1,25 @@
 require_relative 'app'
+require_relative 'storing_data'
+require_relative 'on_loading_data'
+
 
 class Main
   def initialize
     @app = App.new
+    @storing = StoringData.new(@app)
+    @onloading = OnloadingData.new(@app)
+  end
+
+  def onloading_data
+    @onloading.onloading_books_data
+    @onloading.onloading_people_data
+    @onloading.onloading_rentals_data
+  end
+
+  def saving_data
+    @storing.save_books_to_json
+    @storing.save_people_to_json
+    @storing.save_rentals_to_json
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
