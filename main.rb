@@ -2,7 +2,6 @@ require_relative 'app'
 require_relative 'storing_data'
 require_relative 'on_loading_data'
 
-
 class Main
   def initialize
     @app = App.new
