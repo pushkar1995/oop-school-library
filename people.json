@@ -1,1 +1,1 @@
-[{"type":"Student","name":0,"id":72,"age":"das","parent_permission":"y"},{"type":"Teacher","name":0,"id":37,"age":21,"parent_permission":true},{"type":"Student","name":"Roro","id":95,"age":12,"parent_permission":"y"},{"type":"Teacher","name":"dsa","id":45,"age":21,"parent_permission":true}]
+[{"type":"Student","name":"das","id":72,"age":0,"parent_permission":"y"},{"type":"Teacher","name":0,"id":37,"age":21,"parent_permission":true},{"type":"Student","name":12,"id":95,"age":"Roro","parent_permission":"y"},{"type":"Teacher","name":0,"id":45,"age":21,"parent_permission":true}]
