@@ -9,18 +9,6 @@ class Main
     @onloading = OnloadingData.new(@app)
   end
 
-  def onloading_data
-    @onloading.onloading_books_data
-    @onloading.onloading_people_data
-    @onloading.onloading_rentals_data
-  end
-
-  def saving_data
-    @storing.save_books_to_json
-    @storing.save_people_to_json
-    @storing.save_rentals_to_json
-  end
-
   # rubocop:disable Metrics/CyclomaticComplexity
   def run
     puts "\nWelcome to School Library App!\n"
