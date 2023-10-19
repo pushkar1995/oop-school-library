@@ -4,6 +4,8 @@ require_relative 'student'
 require_relative 'teacher'
 
 class App
+  attr_accessor :people, :books, :rentals
+
   def initialize
     @people = []
     @books = []
@@ -96,8 +98,8 @@ class App
   end
 
   def create_rental
-    select_person
-    select_book
+    return unless select_person && select_book
+
     print 'Date (YYYY/MM/DD): '
     date = gets.chomp
     selected_person = @people[@person_choice - 1]

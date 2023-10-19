@@ -1,13 +1,30 @@
 require_relative 'app'
+require_relative 'storingdata'
+require_relative 'onloadingdata'
 
 class Main
   def initialize
     @app = App.new
+    @storing = StoringData.new(@app)
+    @onloading = OnloadingData.new(@app)
+  end
+
+  def onloading_data
+    @onloading.onloading_books_data
+    @onloading.onloading_people_data
+    @onloading.onloading_rentals_data
+  end
+
+  def saving_data
+    @storing.save_books_to_json
+    @storing.save_people_to_json
+    @storing.save_rentals_to_json
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
   def run
     puts "\nWelcome to School Library App!\n"
+    onloading_data
 
     loop do
       print_user_options
@@ -22,6 +39,7 @@ class Main
       when 6 then @app.list_rentals
       when 7
         puts 'Exiting the app! Goodbye.'
+        saving_data
         break
       else
         puts 'Error: Invalid number.'
